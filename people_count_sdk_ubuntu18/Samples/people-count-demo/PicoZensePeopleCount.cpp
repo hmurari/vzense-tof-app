@@ -10,6 +10,8 @@
 #include <bits/stdc++.h>
 #include <ctime>
 #include <string.h>
+#include <stdlib.h>
+#include <signal.h>
 
 using namespace std;
 using namespace cv;
@@ -56,6 +58,15 @@ static char *get_local_time_str() {
         return time_str;
 }
 
+
+// HM: Logging changes.
+// Log evens to file.
+// change is an integer which specifies the type of event to be logged.
+// Since the log file should be append only, adding App started/App stopped events.
+// 0 - People count changed
+// 1 - Residence count changed
+// 2 - Application started.
+// 3 - Application stopped.
 static void log_to_file(int change, int people_cnt, int residence_cnt) {
 		ofstream logfile;
 
@@ -70,8 +81,7 @@ static void log_to_file(int change, int people_cnt, int residence_cnt) {
 						<< residence_cnt
 						<< endl;
 		}
-		else {
-
+		else if (change == 1) {
 				logfile << get_local_time_str() 
 						<< " | Residence Count Changed " 
 						<< " | People Count "
@@ -80,8 +90,41 @@ static void log_to_file(int change, int people_cnt, int residence_cnt) {
 						<< residence_cnt
 						<< endl;
 		}
+		else if (change == 2) {
+				logfile << get_local_time_str() 
+						<< " | Application started.    " 
+						<< " | People Count "
+						<< people_cnt
+						<< " | Residence Count "
+						<< residence_cnt
+						<< endl;
+		}
+		else if (change == 3) {
+				logfile << get_local_time_str() 
+						<< " | Application stopped.    " 
+						<< " | People Count "
+						<< people_cnt
+						<< " | Residence Count "
+						<< residence_cnt
+						<< endl;
+		}
 
 		logfile.close();
+}
+
+
+static void exit_log_fn(void) {
+		log_to_file(3, 0, 0);
+}
+
+static void sigint_hdlr(int sig) {
+		printf("Exiting program.\n");
+		exit(0);
+}
+
+static void sigterm_hdlr(int sig) {
+		printf("Exiting program.\n");
+		exit(0);
 }
 
 
@@ -343,6 +386,14 @@ GET:
 	cout << "--------------------------------------------------------------------" << endl;
 	cout << "--------------------------------------------------------------------\n" << endl;
 
+
+	// HM: Logging changes. Log entry message
+	log_to_file(2, 0, 0);
+
+	// HM: Logging changes. Register exit function.
+	atexit(exit_log_fn);
+	signal(SIGTERM, sigterm_hdlr);
+	signal(SIGINT, sigint_hdlr);
 
 	ALG_PeopleCount* pPeopleCount = new ALG_PeopleCount();
 
