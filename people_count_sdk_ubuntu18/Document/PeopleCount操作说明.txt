@@ -1,0 +1,31 @@
+
+1. 从百度网盘下载Ubuntu18.04.zip。
+2. 按照Document\SDK\PicoZenseSDK开发者指南\3.2.2 软件环境配置 配置环境
+3. 解压Ubuntu18.04.zip，运行install.sh，搭建好PicoZense开发环境。
+4. 进入Samples/people-count-demo。
+5. 执行make命令，生成PicoZensePeopleCount可执行文件。
+6. 运行PicoZensePeopleCount程序。
+
+
+
+客户如要修改demo,请参考如下说明：
+1. Alg_PCConfig.ini 文件中设置 相关参数
+
+	CameraHeight:2250       相机镜头中心距离地面的高度
+	RotationPitch:-30		相机的倾角， 向下倾斜为 负
+	StableSecond:3			人物静止多长时间 统计计数加一， 单位为秒
+
+	
+2. ALG_PeopleCount.h  文件为算法相关的定义，文件中各成员已进行注释
+
+3. PicoZensePeopleCount.cpp  为用户可修改的参考demo程序
+		
+		ALG_PeopleCount* pPeopleCount = new ALG_PeopleCount();  实例化一个 ALG_PeopleCount对象
+		pPeopleCount->Init(campara);     将camera参数通过 init() 传递给对象， 并执行初始化
+		
+		status = Ps2_GetFrame(deviceHandle, sessionIndex, PsDepthFrame, &depthFrame); 通过SDK 接口获得深度图像
+		
+		pPeopleCount->Run(RawDepth)  运行算法
+		
+		通过 pPeopleCount 获得运算结果，（people_number_statistics，residence_count， HighPoint，distance .......）
+		根据需求对运算结果进行显示，使用等

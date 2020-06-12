@@ -1,0 +1,12 @@
+Fri Jun 12 13:28:26 2020 | People    Count Changed  | People Count 1 | Residence Count 0
+Fri Jun 12 13:28:26 2020 | People    Count Changed  | People Count 0 | Residence Count 0
+Fri Jun 12 13:28:26 2020 | People    Count Changed  | People Count 1 | Residence Count 0
+Fri Jun 12 13:28:32 2020 | Residence Count Changed  | People Count 1 | Residence Count 1
+Fri Jun 12 13:28:37 2020 | People    Count Changed  | People Count 0 | Residence Count 1
+Fri Jun 12 13:28:40 2020 | People    Count Changed  | People Count 1 | Residence Count 1
+Fri Jun 12 13:28:45 2020 | People    Count Changed  | People Count 0 | Residence Count 1
+Fri Jun 12 13:28:48 2020 | People    Count Changed  | People Count 1 | Residence Count 1
+Fri Jun 12 13:28:52 2020 | Residence Count Changed  | People Count 1 | Residence Count 2
+Fri Jun 12 13:28:56 2020 | People    Count Changed  | People Count 0 | Residence Count 2
+Fri Jun 12 13:28:58 2020 | People    Count Changed  | People Count 1 | Residence Count 2
+Fri Jun 12 13:28:58 2020 | People    Count Changed  | People Count 0 | Residence Count 2
