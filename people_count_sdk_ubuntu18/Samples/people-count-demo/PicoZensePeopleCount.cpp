@@ -364,7 +364,7 @@ GET:
 		printf("Debug Display is enabled\n");
 	}
 
-	printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+	printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 	int loop_counter = 1;
 	auto start = std::chrono::system_clock::now();
 
