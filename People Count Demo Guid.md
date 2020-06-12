@@ -1,57 +1,58 @@
-# People Count Demo Guid
+# People Count Demo using TOF Camera
 
 
 
 ## Download 
+Clone this repository onto the device. 
+```
+# Use HTTP clone (if SSH keys are not configured)
+git clone https://coolertech@dev.azure.com/coolertech/mp-on-shelf-availability/_git/tof-app
 
-Download people_count_sdk_ubuntu18.zip package 
+OR
 
-## Build zense sdk environment
+# Use SSH clone (if SSH keys are configured)
+git clone git@ssh.dev.azure.com:v3/coolertech/mp-on-shelf-availability/tof-app
+```
 
-1. Unzip the package
-2. run install.sh
-3. Reference **people_count_sdk_ubuntu18/Document/SDK/PicoZenseSDK_User_Guide_Linux_en.pdf**, bulid  your software develop environment
+## Install Dependencies
+* Install Python3 and PIP if not installed already.
+```
+# Check if these are present.
+python3 --version
+pip3 --version
 
-## Compile demo app
+# If not present, then install these.
+sudo apt-get install python3.6
+sudo apt-get install python3-pip
+```
 
-1. enter **people_count_sdk_ubuntu18/Samples/people-count-demo**
-2. run 'make'
+* Install the latest OpenCV library.
+```
+sudo apt-get install python-opencv
+```
 
-## Run the demo
 
+## Build zense sdk environment & Demo application
+* Build Zense SDK environment:
+```
+cd people_count_sdk_ubuntu18
+./install.sh
+```
+
+* Build Demo application:
+## Build Demo application.
+```
+cd Samples/people-count-demo
+make
+```
+
+* Ensure that demo application is compiled. There should be an executable file `PicoZensePeopleCount `
+
+
+## Run the People Count application
+* Run application
+```
 ./PicoZensePeopleCount
-
-
-
-## Configurations:
-
-If user want to modify some parameters or code, you can reference below:
-
-1. Algorithm parameters:
-
-   In 'Alg_PCConfig.ini' files, user need config some paras based the circumstance.
-
-   **CameraHeight** : 2250       the height value (mm) between camera and ground
-   **RotationPitch** : -30		the horizontal angle of the camera 
-   **StableSecond** : 3			reach the time value that people number will be count   
-
-2. Demo modify 
-
-   In 'PicoZensePeopleCount.cpp' files, user can change the demo code.
-
-   ```c++
-   // object instantiation
-   ALG_PeopleCount* pPeopleCount = new ALG_PeopleCount();
-   // init parameters
-   pPeopleCount->Init(campara);
-   //get frame from camera using zense base sdk api
-   status = Ps2_GetFrame(deviceHandle, sessionIndex, PsDepthFrame, &depthFrame);
-   //call algorithm 
-   pPeopleCount->Run(RawDepth);
-   
-   ```
-
-   The result of algorithm: people_number_statistics，residence_count， HighPoint，distance ....... 
-
-   . 
+```
+* The log file is available in `tof-log.txt` file.
 
