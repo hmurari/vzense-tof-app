@@ -54,5 +54,26 @@ make
 ```
 ./PicoZensePeopleCount
 ```
-* The log file is available in `tof-log.txt` file.
+* The log file is available in `tof-log.txt` file. It looks like the following.
+```
+Fri Jun 12 13:39:44 2020 | People Count Changed    | People Count 1 | AD Count 0
+Fri Jun 12 13:39:49 2020 | People Count Changed    | People Count 0 | AD Count 0
+Fri Jun 12 13:39:52 2020 | People Count Changed    | People Count 1 | AD Count 0
+Fri Jun 12 13:39:57 2020 | Residence Count Changed | People Count 1 | AD Count 1
+Fri Jun 12 13:40:02 2020 | People Count Changed    | People Count 0 | AD Count 1
+Fri Jun 12 13:40:03 2020 | People Count Changed    | People Count 1 | AD Count 1
+Fri Jun 12 13:40:10 2020 | People Count Changed    | People Count 0 | AD Count 1
+Fri Jun 12 13:40:13 2020 | People Count Changed    | People Count 1 | AD Count 1
+Fri Jun 12 13:40:19 2020 | Residence Count Changed | People Count 1 | AD Count 2
+Fri Jun 12 13:40:24 2020 | People Count Changed    | People Count 0 | AD Count 2
+Fri Jun 12 13:40:26 2020 | People Count Changed    | People Count 1 | AD Count 2
+Fri Jun 12 13:40:29 2020 | Residence Count Changed | People Count 1 | AD Count 3
+Fri Jun 12 13:40:31 2020 | People Count Changed    | People Count 0 | AD Count 3
+Fri Jun 12 13:40:38 2020 | People Count Changed    | People Count 1 | AD Count 3
+Fri Jun 12 13:40:38 2020 | People Count Changed    | People Count 0 | AD Count 3
+Fri Jun 12 13:40:38 2020 | People Count Changed    | People Count 1 | AD Count 3
+Fri Jun 12 13:40:41 2020 | Residence Count Changed | People Count 1 | AD Count 4
+Fri Jun 12 13:40:45 2020 | People Count Changed    | People Count 0 | AD Count 4
+```
+
 
