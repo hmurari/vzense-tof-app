@@ -152,6 +152,7 @@ static void dbg_capture_image(Mat& img) {
 		cv::imwrite(filename, img);	
 		offset = 0;
 		printf("%s | Debug Img Captured      | Image Name: %s\n", get_local_time_str(), filename); 
+		log_to_file(4, 0, 0, filename);
 	}
 }
 
