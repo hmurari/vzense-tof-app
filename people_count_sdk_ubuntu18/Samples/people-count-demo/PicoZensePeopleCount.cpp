@@ -19,6 +19,10 @@ using namespace cv;
 int LOG_LEVEL = LOG_INFO;
 int DBG_DISPLAY = 0;
 int LOG_TO_FILE = 1;
+int DBG_CAPTURE_IMAGES = 1;
+int DBG_CAPTURE_IMAGES_FREQ = 4;
+int DBG_CAPTURE_VIDEOS = 0;
+
 
 //HM: For logging purposes.
 static char time_str[100];
@@ -59,6 +63,7 @@ static char *get_local_time_str() {
 }
 
 
+
 // HM: Logging changes.
 // Log evens to file.
 // change is an integer which specifies the type of event to be logged.
@@ -67,7 +72,8 @@ static char *get_local_time_str() {
 // 1 - Residence count changed
 // 2 - Application started.
 // 3 - Application stopped.
-static void log_to_file(int change, int people_cnt, int residence_cnt) {
+// 4 - Debug image cpatured.
+static void log_to_file(int change, int people_cnt, int residence_cnt, char *dbg_img_name = NULL) {
 		ofstream logfile;
 
 		logfile.open("tof-log.txt", ios::out | ios::app);
@@ -108,10 +114,46 @@ static void log_to_file(int change, int people_cnt, int residence_cnt) {
 						<< residence_cnt
 						<< endl;
 		}
+		else if (change == 4) {
+				logfile << get_local_time_str()
+						<< " | Debug Img Captured.     "
+						<< " | Image: "
+						<< dbg_img_name
+						<< endl;
+		}
 
 		logfile.close();
 }
 
+// HM: Capture debug images
+static char *get_dbg_file_name_str() {
+        time_t tt;
+        struct tm *local_ti;
+	static char filename_buf[100];
+
+        time(&tt);
+        local_ti = localtime(&tt);
+
+	// Time format we want: '%Y-%m-%d-%H-%M-%S'
+	strftime(filename_buf, 100, "%Y-%m-%d-%H-%M-%S.jpg", local_ti);
+	return filename_buf;
+}
+
+static void dbg_capture_image(Mat& img) {
+
+	if (DBG_CAPTURE_IMAGES == 0) {
+		return;
+	}
+
+	static int offset = 0;
+	offset++;
+	if (offset % DBG_CAPTURE_IMAGES_FREQ == 0) {
+		char *filename = get_dbg_file_name_str();
+		cv::imwrite(filename, img);	
+		offset = 0;
+		printf("%s | Debug Img Captured      | Image Name: %s\n", get_local_time_str(), filename); 
+	}
+}
 
 static void exit_log_fn(void) {
 		log_to_file(3, 0, 0);
@@ -415,6 +457,15 @@ GET:
 		printf("Debug Display is enabled\n");
 	}
 
+
+	if (DBG_CAPTURE_IMAGES == 0) {
+		printf("Capturing debug images is disabled.\n");
+	}
+	else {
+		printf("Capturing debug images enabled. Will capture one out of every %d AD changes.\n", DBG_CAPTURE_IMAGES_FREQ);
+	}
+
+
 	printf("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 	int loop_counter = 1;
 	auto start = std::chrono::system_clock::now();
@@ -569,6 +620,9 @@ GET:
 						if (LOG_TO_FILE == 1) {
 								log_to_file(1, pPeopleCount->people_number_statistics, pPeopleCount->residence_count);
 						}
+
+						// HM: Capture images when AD count changes.
+						dbg_capture_image(imageMat);
 				}
 				
 			}
